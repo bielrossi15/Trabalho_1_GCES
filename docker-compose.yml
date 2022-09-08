@@ -1,0 +1,66 @@
+version: "2.2"
+
+services:
+  db:
+    image: postgres:11-alpine
+
+    env_file:
+      - ./library_back/.env
+
+    volumes:
+      - ./db:/var/lib/postgresql/data
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  library_back:
+    build: 
+      context: ./library_back
+
+    command: sh -c "python3 manage.py makemigrations && python3 manage.py migrate && python3 manage.py runserver 0.0.0.0:8000"
+
+    env_file:
+      - ./library_back/.env
+
+    volumes:
+      - .:/library_back
+
+    ports:
+      - "8000:8000"
+
+    depends_on:
+      db:
+        condition: service_healthy
+    
+    healthcheck:
+      test: ["CMD-SHELL", "python3", "manage.py", "runserver", "0.0.0.0:8000"]
+      interval: 1s
+      timeout: 1s
+      retries: 2
+  
+  library_front:
+    build:
+      context: ./library_front
+
+    ports:
+      - 3000:3000
+
+    volumes:
+      - .:/library_front
+
+    networks:
+      - control_network
+
+    depends_on:
+      library_back:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
+
+networks:
+  control_network:
+    driver: bridge
