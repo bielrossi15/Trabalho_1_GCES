@@ -28,7 +28,7 @@ jobs:
           echo POSTGRES_PASSWORD=password >> library_back/.env
           cat library_back/.env
       - name: Executar docker-compose up
-        run: sudo docker-compose up -d
+        run: sudo docker-compose up --build
 
       - name: Aguardar o docker-compose
         run: sleep 120

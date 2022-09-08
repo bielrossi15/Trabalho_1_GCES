@@ -1,4 +1,4 @@
-name: Estilo
+name: Testes
 
 on:
   push:
@@ -29,7 +29,7 @@ jobs:
           cat library_back/.env
       
       - name: Executar pytest  
-        run: sudo docker-compose run library_back pytest --cov --cov-report xml:./coverage.xml
+        run: sudo docker-compose run library_back python3 ./manage.py 
       
       - name: Executar teste 
         run: sudo docker-compose run library_front yarn test --coverage --watchAll=false
