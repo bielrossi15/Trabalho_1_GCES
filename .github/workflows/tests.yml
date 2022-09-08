@@ -3,13 +3,13 @@ name: Estilo
 on:
   push:
     branches:
-      - main
+      - master
   pull_request:
     branches:
-      - main
+      - master
   commit:
     branches:
-      - main
+      - master
 
 jobs:
   check_style:
