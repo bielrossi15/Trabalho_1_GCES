@@ -1,21 +1,19 @@
-# define a imagem base
 FROM python:3.9-alpine
 
-# evita que a saída do python no terminal seja bufferizada
 ENV PYTHONUNBUFFERED 1
 
-# instala dependências do postgres
 RUN apk --update add \
     build-base \
     postgresql \
     postgresql-dev \
-    libpq \
-    # dependências do pillow
-    jpeg-dev \
-    zlib-dev
+    libpq
 
-# cria o diretório de trabalho
-WORKDIR /code
+WORKDIR /back
 
-# copia o restante do projeto para o diretório de trabalho
-COPY . /code/
+
+COPY ./requirements.txt /back
+
+RUN pip install --upgrade pip
+RUN pip install -r requirements.txt
+
+COPY . /back/
