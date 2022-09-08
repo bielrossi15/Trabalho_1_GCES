@@ -1,0 +1,40 @@
+name: Estilo
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  commit:
+    branches:
+      - main
+
+jobs:
+  check_style:
+    name: Verificar Estilo de Código
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Conferir repositório
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0  # Evita clones rasos
+
+      - name: Criar arquivo .env
+        run: |
+          touch .env
+          echo POSTGRES_HOST=db >> .env
+          echo POSTGRES_DB=library_db >> .env
+          echo POSTGRES_USER=postgres >> .env
+          echo POSTGRES_PASSWORD=password >> .env
+          cat .env
+      
+      - name: Executar pytest  
+        run: sudo docker-compose run library_back pytest --cov --cov-report xml:./coverage.xml
+      
+      - name: Executar teste 
+        run: sudo docker-compose run library_front yarn test --coverage --watchAll=false
+
+      
