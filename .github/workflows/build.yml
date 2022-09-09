@@ -29,7 +29,7 @@ jobs:
           echo POSTGRES_PORT=5432 >> library_back/.env
           cat library_back/.env
       - name: Executar docker-compose up
-        run: sudo docker-compose up --build
+        run: sudo docker-compose up --build --d
 
       - name: Aguardar o docker-compose
         run: sleep 120

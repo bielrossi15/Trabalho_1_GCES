@@ -30,7 +30,7 @@ jobs:
           cat library_back/.env
       
       - name: Executar pytest  
-        run: sudo docker-compose run library_back python3 ./manage.py 
+        run: sudo docker-compose run library_back python3 ./manage.py test
       
       - name: Executar teste 
         run: sudo docker-compose run library_front yarn test --coverage --watchAll=false
