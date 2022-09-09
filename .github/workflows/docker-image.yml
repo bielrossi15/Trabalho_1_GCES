@@ -1,0 +1,34 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: docker login
+      env:
+        DOCKER_USER: ${{secrets.DOCKER_USER}}
+        DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+      run: |
+        docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+  
+    - name: Backend docker image
+      run: docker build . --file library_back/Dockerfile --tag bielrossi15/gces-backend:$(date +%s)
+      
+    - name: Backend docker push
+      run: docker push bielrossi15/gces-backend
+      
+    - name: Frontend docker image
+      run: docker build . --file library_front/Dockerfile --tag bielrossi15/gces-frontend:$(date +%s)
+      
+    - name: Frontend docker push
+      run: docker push bielrossi15/gces-frontend
