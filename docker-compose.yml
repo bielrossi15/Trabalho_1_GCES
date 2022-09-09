@@ -67,18 +67,17 @@ services:
         condition: service_healthy
   
   nginx:
+    image: nginx
     build:
         dockerfile: ./nginx.dockerfile
         context: .
-    image: nginx
     ports:
       - "80:80"
     networks:
       - control_network
     depends_on:
       - "library_back"
-      - "library_front"
-    
+      - "library_front"  
 
 volumes:
   postgres_data:

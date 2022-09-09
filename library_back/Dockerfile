@@ -10,12 +10,9 @@ RUN apk --update add \
 
 WORKDIR /back
 
-RUN ls .
-
 COPY library_back/requirements.txt /back
-
 
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
-COPY . /back/
+COPY library_back/ /back
