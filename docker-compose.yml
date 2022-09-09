@@ -21,7 +21,8 @@ services:
 
   library_back:
     build: 
-      context: ./library_back
+      dockerfile: ./library_back/Dockerfile
+      context: .
 
     command: sh -c "python3 manage.py makemigrations && python3 manage.py migrate && python3 manage.py runserver 0.0.0.0:8000"
 
@@ -49,7 +50,8 @@ services:
   
   library_front:
     build:
-      context: ./library_front
+      dockerfile: ./library_front/Dockerfile
+      context: .
 
     ports:
       - 3000:3000

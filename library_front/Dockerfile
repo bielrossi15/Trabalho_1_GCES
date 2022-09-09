@@ -2,11 +2,12 @@ FROM node:alpine
 
 WORKDIR /front
 
-COPY package.json /front
+COPY library_front/package.json /front
+
+COPY . /front/
 
 RUN npm install
 
-COPY . /front/
 
 CMD ["npm", "start"]
 EXPOSE 3000
