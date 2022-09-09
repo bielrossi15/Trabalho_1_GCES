@@ -22,13 +22,13 @@ jobs:
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
   
     - name: Backend docker image
-      run: docker build . --file library_back/Dockerfile --tag bielrossi15/gces-backend:$(date +%s)
+      run: sudo docker build . --file library_back/Dockerfile --tag bielrossi15/gces-backend:$(date +%s)
       
     - name: Backend docker push
-      run: docker push bielrossi15/gces-backend
+      run: sudo docker push bielrossi15/gces-backend
       
     - name: Frontend docker image
-      run: docker build . --file library_front/Dockerfile --tag bielrossi15/gces-frontend:$(date +%s)
+      run: sudo docker build . --file library_front/Dockerfile --tag bielrossi15/gces-frontend:$(date +%s)
       
     - name: Frontend docker push
-      run: docker push bielrossi15/gces-frontend
+      run: sudo docker push bielrossi15/gces-frontend
